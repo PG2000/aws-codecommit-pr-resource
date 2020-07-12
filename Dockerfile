@@ -1,4 +1,4 @@
-FROM pg2000/git-codecommit-resource:0.0.1
+FROM mothershipone/multi-build:latest 
 
 COPY assets/ /opt/resource/
 RUN chmod +x /opt/resource/*
