@@ -1,6 +1,6 @@
 #!/bin/bash
 # vim: set ft=sh
-AWS_REGION=eu-central-1
+export AWS_REGION=eu-central-1
 set -e -u -x
 
 exec 3>&1 # make stdout available as fd 3 for the result
