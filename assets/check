@@ -18,14 +18,14 @@ uri="$(jq -r '.source.uri // ""' < "${payload}")"
 repo_name=$(echo $uri | sed 's/codecommit::eu-central-1:\/\///g')
 version_sha="$(jq -r '.version.sha // ""' < "${payload}")"
 
-open_pull_requests=$(aws codecommit list-pull-requests --repository-name ${repo_name} --pull-request-status OPEN)
+open_pull_requests=$(aws codecommit list-pull-requests --repository-name ${repo_name} --pull-request-status OPEN --region eu-central-1)
 num_pull_requests="$(echo "${open_pull_requests}" | jq '.pullRequestIds | length')"
 
 new_versions=''
 
 for i in $(seq 0 $((num_pull_requests - 1))); do
     mr="$(echo "${open_pull_requests}" | jq -r '.pullRequestIds['"$i"']')"
-	mr_details=$(aws codecommit get-pull-request --pull-request-id ${mr})
+	mr_details=$(aws codecommit get-pull-request --pull-request-id ${mr} --region eu-central-1)
     mr_sha="$(echo "${mr_details}" | jq -r '.pullRequest.pullRequestTargets[0].sourceCommit')"
     mr_updated_at="$(echo "${mr_details}" | jq -r '.pullRequest.lastActivityDate')"
     mr_updated_at=$(gdate -d "@$mr_updated_at" "+%s")
