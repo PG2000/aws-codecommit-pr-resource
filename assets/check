@@ -28,9 +28,9 @@ for i in $(seq 0 $((num_pull_requests - 1))); do
 	mr_details=$(aws codecommit get-pull-request --pull-request-id ${mr} --region eu-central-1)
     mr_sha="$(echo "${mr_details}" | jq -r '.pullRequest.pullRequestTargets[0].sourceCommit')"
     mr_updated_at="$(echo "${mr_details}" | jq -r '.pullRequest.lastActivityDate')"
-    mr_updated_at=$(gdate -d "@$mr_updated_at" "+%s")
+    mr_updated_at=$(date -d "@$mr_updated_at" "+%s")
     mr_creation_date="$(echo "${mr_details}" | jq -r '.pullRequest.creationDate')"
-    mr_creation_date=$(gdate -d "@$mr_creation_date" "+%s")
+    mr_creation_date=$(date -d "@$mr_creation_date" "+%s")
     if [ "${mr_sha}" != "null" ]; then
         if [ ${mr_updated_at} -gt ${mr_creation_date} ] || [ -z "${version_sha}" ]; then
             new_versions="${new_versions},{\"sha\":\"${mr_sha}\"}"
