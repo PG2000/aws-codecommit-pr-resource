@@ -29,6 +29,10 @@ version="$(jq -r '.version // ""' < "${payload}")"
 commit_sha="$(echo "${version}" | jq -r '.sha // ""')"
 pr="$(echo "${version}" | jq -r '.pr // ""')"
 
+
+cd "${destination}"
+cd "${repo_name}"
+
 before_commit_id=$(git rev-parse "${commit_sha}"^)
 
 aws codecommit post-comment-for-pull-request \
