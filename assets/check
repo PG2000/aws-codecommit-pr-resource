@@ -36,7 +36,7 @@ for i in $(seq 0 $((num_pull_requests - 1))); do
 
     if [ "${mr_sha}" != "null" ]; then
         if [ ${mr_updated_at} -gt ${mr_creation_date} ] || [ -z "${version_sha}" ]; then
-            new_versions="${new_versions},{\"sha\":\"${mr_sha}\"}"
+            new_versions="${new_versions},{\"sha\":\"${mr_sha}\",\"pr\": \"${mr}\"}"
         fi
     fi
 done
