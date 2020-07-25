@@ -31,7 +31,12 @@ pr="$(echo "${version}" | jq -r '.pr // ""')"
 
 
 cd "${destination}"
+
+git clone ${uri} ${repo_name}
+
 cd "${repo_name}"
+
+git reset --hard "${commit_sha}"
 
 before_commit_id=$(git rev-parse "${commit_sha}"^)
 
