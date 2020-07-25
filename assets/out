@@ -29,12 +29,6 @@ version="$(jq -r '.version // ""' < "${payload}")"
 commit_sha="$(echo "${version}" | jq -r '.sha // ""')"
 pr="$(echo "${version}" | jq -r '.pr // ""')"
 
-git clone "${uri}" "${destination}"
-
-cd "${destination}"
-
-git reset --hard "${commit_sha}"
-
 before_commit_id=$(git rev-parse "${commit_sha}"^)
 
 aws codecommit post-comment-for-pull-request \
